@@ -62,6 +62,4 @@
 
 <p><img align="left" src="https://github-readme-stats.vercel.app/api/top-langs?username=nhaidaar&show_icons=true&locale=en&layout=compact" alt="nhaidaar" /></p>
 
-<p>&nbsp;<img align="center" src="https://github-readme-stats.vercel.app/api?username=nhaidaar&show_icons=true&locale=en" alt="nhaidaar" /></p>
-
 <p><img align="center" src="https://github-readme-streak-stats.herokuapp.com/?user=nhaidaar&" alt="nhaidaar" /></p>
