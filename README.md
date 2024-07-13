@@ -12,7 +12,7 @@
 
 - 👨‍💻 All of my projects are available at <a target="_blank" href="https://naufal.work">**naufal.work**</a> *(Coming Soon)*
 
-- 📫 How to reach me **nhaidaar@icloud.com** or **t.me/nhaidaar**
+- 📫 How to reach me **nhaidaar@icloud.com** or Telegram **@nhaidaar**
 
 <h3 align="left">Connect with me:</h3>
 <p align="left">
