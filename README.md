@@ -8,7 +8,7 @@
 
 <br>
 
-- 🌱 I’m currently learning **Flutter and Laravel**
+- 🌱 I’m currently learning **Flutter**
 
 - 👨‍💻 All of my projects are available at <a target="_blank" href="https://naufal.work">**naufal.work**</a> *(Coming Soon)*
 
