@@ -1,7 +1,7 @@
 <h1 align="center">
 <!--   Hi 👋, I'm Naufal Haidar -->
   <samp>
-    &gt; Hello World 👋, I'm <b><a target="_blank" href="https://naufal.work">Naufal Haidar</a></b>
+    &gt; Hello World 👋, I'm <b><a target="_blank" href="http://naufal.work">Naufal Haidar</a></b>
   </samp>
 </h1>
 
