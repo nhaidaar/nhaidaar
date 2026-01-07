@@ -166,6 +166,72 @@
                 color: transparent;
             }
 
+            /* --- HAMBURGER MENU --- */
+            .menu-open .hamburger-line:nth-child(1) {
+                transform: rotate(45deg) translate(4px, 4px);
+            }
+            .menu-open .hamburger-line:nth-child(2) {
+                opacity: 0;
+            }
+            .menu-open .hamburger-line:nth-child(3) {
+                transform: rotate(-45deg) translate(4px, -4px);
+            }
+            .mobile-menu-visible {
+                opacity: 1 !important;
+                pointer-events: auto !important;
+            }
+
+            /* --- TIMELINE --- */
+            .timeline-line {
+                position: absolute;
+                left: 50%;
+                top: 0;
+                bottom: 0;
+                width: 1px;
+                background: #1f1f1f;
+                transform: translateX(-50%);
+            }
+            .timeline-progress {
+                position: absolute;
+                left: 50%;
+                top: 0;
+                width: 1px;
+                height: 0%;
+                background: #2e5cff;
+                transform: translateX(-50%);
+                z-index: 1;
+            }
+            .timeline-node {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                width: 12px;
+                height: 12px;
+                background: #050505;
+                border: 2px solid #1f1f1f;
+                border-radius: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 2;
+                transition: all 0.3s ease;
+            }
+            .timeline-node.active {
+                border-color: #2e5cff;
+                background: #2e5cff;
+                box-shadow: 0 0 20px rgba(46, 92, 255, 0.5);
+            }
+            @media (max-width: 767px) {
+                .timeline-line,
+                .timeline-progress {
+                    display: none;
+                }
+                .timeline-node {
+                    display: none;
+                }
+                .xp-row {
+                    padding-left: 0;
+                }
+            }
+
             /* --- MARQUEE --- */
             .marquee-wrapper {
                 width: 100%;
@@ -201,11 +267,18 @@
             <div class="font-mono text-xs tracking-widest opacity-70">
                 NAUFAL.WORK [v1.0]
             </div>
-            <div class="font-mono text-xs flex gap-6">
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex font-mono text-xs gap-6">
                 <a
                     href="#work"
                     class="nav-link hover:text-neon transition-colors cursor-pointer"
                     >WORK</a
+                >
+                <a
+                    href="#experience"
+                    class="nav-link hover:text-neon transition-colors cursor-pointer"
+                    >EXPERIENCE</a
                 >
                 <a
                     href="#contact"
@@ -223,7 +296,56 @@
                     >GITHUB</a
                 >
             </div>
+
+            <!-- Hamburger Button (Mobile) -->
+            <button
+                id="menu-toggle"
+                class="md:hidden flex flex-col justify-center items-center w-8 h-8 gap-1.5 z-50"
+                aria-label="Toggle menu"
+            >
+                <span
+                    class="hamburger-line w-6 h-0.5 bg-white transition-all duration-300"
+                ></span>
+                <span
+                    class="hamburger-line w-6 h-0.5 bg-white transition-all duration-300"
+                ></span>
+                <span
+                    class="hamburger-line w-6 h-0.5 bg-white transition-all duration-300"
+                ></span>
+            </button>
         </nav>
+
+        <!-- Mobile Menu Overlay -->
+        <div
+            id="mobile-menu"
+            class="fixed inset-0 bg-void/95 backdrop-blur-lg z-40 flex flex-col justify-center items-center gap-8 opacity-0 pointer-events-none transition-opacity duration-300 md:hidden"
+        >
+            <a
+                href="#work"
+                class="mobile-nav-link nav-link text-2xl font-mono hover:text-neon transition-colors"
+                >WORK</a
+            >
+            <a
+                href="#experience"
+                class="mobile-nav-link nav-link text-2xl font-mono hover:text-neon transition-colors"
+                >EXPERIENCE</a
+            >
+            <a
+                href="#contact"
+                class="mobile-nav-link nav-link text-2xl font-mono hover:text-neon transition-colors"
+                >CONTACT</a
+            >
+            <a
+                href="https://linkedin.com/in/nhaidaar"
+                class="mobile-nav-link nav-link text-2xl font-mono hover:text-neon transition-colors"
+                >LINKEDIN</a
+            >
+            <a
+                href="https://github.com/nhaidaar"
+                class="mobile-nav-link nav-link text-2xl font-mono hover:text-neon transition-colors"
+                >GITHUB</a
+            >
+        </div>
 
         <main id="main-content" class="relative z-10">
             <!-- HERO SECTION -->
@@ -240,9 +362,9 @@
 
                     <!-- "Naufal Haidar" - Massive, Full Stack Style (Solid White) -->
                     <h1
-                        class="animate-enter text-[11vw] leading-[0.8] font-extrabold tracking-tighter uppercase text-white delay-200"
+                        class="animate-enter text-[10vw] leading-[0.8] font-extrabold tracking-tighter uppercase text-white delay-200"
                     >
-                        Naufal Haidar
+                        Naufal.Haidar
                     </h1>
                 </div>
 
@@ -535,6 +657,164 @@
                 </div>
             </section>
 
+            <!-- EXPERIENCE TREE -->
+            <section
+                id="experience"
+                class="relative py-32 px-6 md:px-12 bg-void border-t border-white/5 overflow-hidden"
+            >
+                <!-- Header -->
+                <div class="mb-24 flex justify-between items-end relative z-20">
+                    <h2 class="text-6xl font-bold tracking-tighter">
+                        EXPERIENCE
+                    </h2>
+                    <span class="font-mono text-xs text-neon"
+                        >(04) CAREER_LOG</span
+                    >
+                </div>
+
+                <!-- The Tree Line -->
+                <div class="timeline-line"></div>
+                <div class="timeline-progress"></div>
+
+                <!-- XP NODE 1 -->
+                <div
+                    class="xp-row relative grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-12 mb-16 md:mb-48"
+                >
+                    <!-- Center Node -->
+                    <div class="timeline-node"></div>
+
+                    <!-- Left Content (Date) - Hidden on mobile -->
+                    <div
+                        class="hidden md:block text-right md:pr-16 self-center relative z-10 parallax-slow"
+                    >
+                        <div class="font-mono text-5xl font-bold text-gray-800">
+                            Oct 2025
+                        </div>
+                        <div class="font-mono text-xs text-neon mt-2">
+                            Dec 2025
+                        </div>
+                    </div>
+
+                    <!-- Right Content (Role) -->
+                    <div class="md:pl-16 relative z-10 parallax-fast">
+                        <div
+                            class="p-6 md:p-8 border border-[#1f1f1f] bg-card/50 backdrop-blur-sm rounded-lg hover:border-gray-600 transition-colors"
+                        >
+                            <!-- Date shown on mobile only -->
+                            <div class="flex items-center gap-3 mb-4 md:hidden">
+                                <span
+                                    class="font-mono text-2xl font-bold text-white"
+                                    >Oct 2025</span
+                                >
+                                <span class="font-mono text-xs text-neon"
+                                    >Dec 2025</span
+                                >
+                            </div>
+                            <h3
+                                class="text-xl md:text-2xl font-bold text-white mb-1"
+                            >
+                                CMLABS
+                            </h3>
+                            <div class="font-mono text-xs text-gray-500 mb-4">
+                                BACKEND DEVELOPER INTERN
+                            </div>
+                            <p
+                                class="text-gray-400 text-sm leading-relaxed mb-6"
+                            >
+                                Engineered robust backend systems that
+                                streamline human resource operations, from
+                                employee management to complex payroll
+                                calculations, all deployed through containerized
+                                microservices.
+                            </p>
+                            <div class="flex gap-2 flex-wrap">
+                                <span
+                                    class="text-[10px] font-mono border border-gray-800 px-2 py-1 rounded text-gray-500"
+                                    >TYPESCRIPT</span
+                                >
+                                <span
+                                    class="text-[10px] font-mono border border-gray-800 px-2 py-1 rounded text-gray-500"
+                                    >EXPRESS.JS</span
+                                >
+                                <span
+                                    class="text-[10px] font-mono border border-gray-800 px-2 py-1 rounded text-gray-500"
+                                    >PRISMA</span
+                                >
+                                <span
+                                    class="text-[10px] font-mono border border-gray-800 px-2 py-1 rounded text-gray-500"
+                                    >DOCKER</span
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- XP NODE 2 -->
+                <div
+                    class="xp-row relative grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-12"
+                >
+                    <div class="timeline-node"></div>
+
+                    <div
+                        class="hidden md:block text-right md:pr-16 self-center relative z-10 parallax-slow"
+                    >
+                        <div class="font-mono text-5xl font-bold text-gray-800">
+                            Feb 2025
+                        </div>
+                        <div class="font-mono text-xs text-gray-500 mt-2">
+                            Sep 2025
+                        </div>
+                    </div>
+
+                    <div class="md:pl-16 relative z-10 parallax-fast">
+                        <div
+                            class="p-6 md:p-8 border border-[#1f1f1f] bg-card/50 backdrop-blur-sm rounded-lg hover:border-gray-600 transition-colors"
+                        >
+                            <!-- Date shown on mobile only -->
+                            <div class="flex items-center gap-3 mb-4 md:hidden">
+                                <span
+                                    class="font-mono text-2xl font-bold text-white"
+                                    >Feb 2025</span
+                                >
+                                <span class="font-mono text-xs text-gray-500"
+                                    >Sep 2025</span
+                                >
+                            </div>
+                            <h3
+                                class="text-xl md:text-2xl font-bold text-white mb-1"
+                            >
+                                CMLABS
+                            </h3>
+                            <div class="font-mono text-xs text-gray-500 mb-4">
+                                MOBILE DEVELOPER INTERN
+                            </div>
+                            <p
+                                class="text-gray-400 text-sm leading-relaxed mb-6"
+                            >
+                                Crafted the "CMLABS Connect" app that empowers
+                                sales teams to capture, track, and nurture leads
+                                in real-time with seamless push notifications
+                                and comprehensive analytics.
+                            </p>
+                            <div class="flex gap-2 flex-wrap">
+                                <span
+                                    class="text-[10px] font-mono border border-gray-800 px-2 py-1 rounded text-gray-500"
+                                    >FLUTTER</span
+                                >
+                                <span
+                                    class="text-[10px] font-mono border border-gray-800 px-2 py-1 rounded text-gray-500"
+                                    >GETX</span
+                                >
+                                <span
+                                    class="text-[10px] font-mono border border-gray-800 px-2 py-1 rounded text-gray-500"
+                                    >FIREBASE</span
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <!-- FOOTER (Centered Button) -->
             <section
                 id="contact"
@@ -620,7 +900,35 @@
             // Sync GSAP
             gsap.registerPlugin(ScrollTrigger);
 
-            // --- 2. SPOTLIGHT MOUSE TRACKING ---
+            // --- 2. MOBILE MENU TOGGLE ---
+            const menuToggle = document.getElementById("menu-toggle");
+            const mobileMenu = document.getElementById("mobile-menu");
+
+            menuToggle.addEventListener("click", () => {
+                menuToggle.classList.toggle("menu-open");
+                mobileMenu.classList.toggle("mobile-menu-visible");
+
+                // Prevent body scroll when menu is open
+                if (mobileMenu.classList.contains("mobile-menu-visible")) {
+                    document.body.style.overflow = "hidden";
+                    lenis.stop();
+                } else {
+                    document.body.style.overflow = "";
+                    lenis.start();
+                }
+            });
+
+            // Close mobile menu when clicking a link
+            document.querySelectorAll(".mobile-nav-link").forEach((link) => {
+                link.addEventListener("click", () => {
+                    menuToggle.classList.remove("menu-open");
+                    mobileMenu.classList.remove("mobile-menu-visible");
+                    document.body.style.overflow = "";
+                    lenis.start();
+                });
+            });
+
+            // --- 3. SPOTLIGHT MOUSE TRACKING ---
             const spotlight = document.getElementById("spotlight");
             if (spotlight) {
                 window.addEventListener("mousemove", (e) => {
@@ -656,6 +964,55 @@
                         trigger: card,
                         start: "top top",
                         end: "bottom top",
+                        scrub: true,
+                    },
+                });
+            });
+
+            // Timeline Progress Animation
+            gsap.to(".timeline-progress", {
+                height: "100%",
+                ease: "none",
+                scrollTrigger: {
+                    trigger: "#experience",
+                    start: "top 50%",
+                    end: "bottom 80%",
+                    scrub: true,
+                },
+            });
+
+            // Timeline Node Activation
+            gsap.utils.toArray(".timeline-node").forEach((node) => {
+                ScrollTrigger.create({
+                    trigger: node,
+                    start: "top 60%",
+                    onEnter: () => node.classList.add("active"),
+                    onLeaveBack: () => node.classList.remove("active"),
+                });
+            });
+
+            // Experience Cards Parallax
+            gsap.utils.toArray(".parallax-slow").forEach((el) => {
+                gsap.from(el, {
+                    y: 50,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 90%",
+                        end: "top 40%",
+                        scrub: true,
+                    },
+                });
+            });
+
+            gsap.utils.toArray(".parallax-fast").forEach((el) => {
+                gsap.from(el, {
+                    y: 80,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 90%",
+                        end: "top 40%",
                         scrub: true,
                     },
                 });
