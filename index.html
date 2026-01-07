@@ -1,0 +1,677 @@
+<!doctype html>
+<html lang="en" class="antialiased">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Naufal Haidar // Software Developer</title>
+
+        <!-- TAILWIND CSS -->
+        <script src="https://cdn.tailwindcss.com"></script>
+
+        <!-- FONTS -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=Manrope:wght@200;400;600;800&display=swap"
+            rel="stylesheet"
+        />
+
+        <!-- LIBRARIES -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+        <script src="https://unpkg.com/@studio-freight/lenis@1.0.29/dist/lenis.min.js"></script>
+
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            void: "#050505",
+                            card: "#0a0a0a",
+                            neon: "#2E5CFF",
+                        },
+                        fontFamily: {
+                            sans: ["Manrope", "sans-serif"],
+                            mono: ["JetBrains Mono", "monospace"],
+                        },
+                        backgroundImage: {
+                            "grid-pattern":
+                                "linear-gradient(to right, #222 1px, transparent 1px), linear-gradient(to bottom, #222 1px, transparent 1px)",
+                        },
+                    },
+                },
+            };
+        </script>
+
+        <style>
+            body {
+                background-color: #050505;
+                color: #f4f4f5;
+                overflow-x: hidden;
+            }
+
+            /* --- BACKGROUND LAYERS --- */
+            .bg-grid {
+                background-size: 50px 50px;
+                mask-image: radial-gradient(
+                    circle at center,
+                    black 40%,
+                    transparent 100%
+                );
+                -webkit-mask-image: radial-gradient(
+                    circle at center,
+                    black 40%,
+                    transparent 100%
+                );
+                opacity: 0.2;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                z-index: 0;
+                pointer-events: none;
+            }
+
+            .spotlight {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 800px;
+                height: 800px;
+                background: radial-gradient(
+                    circle,
+                    rgba(46, 92, 255, 0.15) 0%,
+                    rgba(0, 0, 0, 0) 70%
+                );
+                transform: translate(-50%, -50%);
+                pointer-events: none;
+                z-index: 0;
+                transition: opacity 0.5s ease;
+            }
+
+            /* --- ANIMATIONS --- */
+            @keyframes slideUpFade {
+                0% {
+                    opacity: 0;
+                    transform: translateY(40px);
+                }
+                100% {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            .animate-enter {
+                animation: slideUpFade 1.2s cubic-bezier(0.16, 1, 0.3, 1)
+                    forwards;
+                opacity: 0;
+            }
+            .delay-100 {
+                animation-delay: 0.1s;
+            }
+            .delay-200 {
+                animation-delay: 0.2s;
+            }
+            .delay-300 {
+                animation-delay: 0.3s;
+            }
+
+            /* --- PROJECT CARD --- */
+            .work-container {
+                position: relative;
+                width: 100%;
+            }
+            .card-wrapper {
+                height: 100vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: sticky;
+                top: 0;
+            }
+            .project-card {
+                width: 90vw;
+                max-width: 1200px;
+                height: 80vh;
+                background: #0a0a0a;
+                border: 1px solid #1f1f1f;
+                border-radius: 12px;
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+                box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.8);
+                will-change: transform;
+                text-decoration: none;
+                color: inherit;
+                transition: border-color 0.3s ease;
+            }
+            .project-card:hover {
+                border-color: #333;
+            }
+            @media (min-width: 768px) {
+                .project-card {
+                    flex-direction: row;
+                }
+            }
+
+            /* --- UTILITIES --- */
+            .hero-text-stroke {
+                -webkit-text-stroke: 1px rgba(255, 255, 255, 0.5);
+                color: transparent;
+            }
+
+            /* --- MARQUEE --- */
+            .marquee-wrapper {
+                width: 100%;
+                overflow: hidden;
+                background: #050505;
+                border-top: 1px solid #1f1f1f;
+                padding: 1.5rem 0;
+            }
+            .marquee-content {
+                display: flex;
+                width: max-content; /* Critical for scrolling */
+                animation: marquee 30s linear infinite;
+            }
+            @keyframes marquee {
+                0% {
+                    transform: translateX(0);
+                }
+                100% {
+                    transform: translateX(-50%);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- BACKGROUNDS -->
+        <div class="bg-grid bg-grid-pattern"></div>
+        <div id="spotlight" class="spotlight"></div>
+
+        <!-- NAVIGATION -->
+        <nav
+            class="fixed top-0 left-0 w-full p-6 flex justify-between items-center z-50 bg-void/70 backdrop-blur-md border-b border-white/5"
+        >
+            <div class="font-mono text-xs tracking-widest opacity-70">
+                NAUFAL.WORK [v1.0]
+            </div>
+            <div class="font-mono text-xs flex gap-6">
+                <a
+                    href="#work"
+                    class="nav-link hover:text-neon transition-colors cursor-pointer"
+                    >INDEX</a
+                >
+                <a
+                    href="#about"
+                    class="nav-link hover:text-neon transition-colors cursor-pointer"
+                    >INFO</a
+                >
+                <a
+                    href="#contact"
+                    class="nav-link hover:text-neon transition-colors cursor-pointer"
+                    >COMM</a
+                >
+            </div>
+        </nav>
+
+        <main id="main-content" class="relative z-10">
+            <!-- HERO SECTION -->
+            <section
+                class="h-screen w-full flex flex-col justify-center px-6 md:px-12 relative overflow-hidden"
+            >
+                <div class="relative z-20 max-w-[95vw]">
+                    <!-- "Hi, I'm" - Smaller, Architect Style (Stroke/Transparent) -->
+                    <h2
+                        class="animate-enter hero-text-stroke text-4xl md:text-6xl font-bold uppercase tracking-widest mb-2 delay-100"
+                    >
+                        Hi, I'm
+                    </h2>
+
+                    <!-- "Naufal Haidar" - Massive, Full Stack Style (Solid White) -->
+                    <h1
+                        class="animate-enter text-[11vw] leading-[0.8] font-extrabold tracking-tighter uppercase text-white delay-200"
+                    >
+                        Naufal Haidar
+                    </h1>
+                </div>
+
+                <div
+                    class="animate-enter absolute bottom-12 right-6 md:right-12 text-right z-20 delay-300"
+                >
+                    <p class="font-mono text-xs md:text-sm text-gray-400">
+                        <span class="text-neon">></span> MOBILE & BACKEND<br />
+                        LOC: INDONESIA<br />
+                        READY TO BUILD.
+                    </p>
+                </div>
+            </section>
+
+            <!-- MANIFESTO (INFO) -->
+            <section
+                id="about"
+                class="min-h-[60vh] w-full flex items-center px-6 md:px-24 py-24 bg-void/90 backdrop-blur-sm z-20 relative border-t border-white/5"
+            >
+                <div class="max-w-4xl">
+                    <p
+                        class="manifesto-text text-3xl md:text-5xl font-light leading-tight text-gray-300"
+                    >
+                        Software is not just code; it is the
+                        <span class="text-white font-semibold"
+                            >nervous system</span
+                        >
+                        of the modern world. From
+                        <span class="text-neon">scalable backends</span> to
+                        intuitive mobile experiences, I engineer resilient
+                        systems where logic meets efficiency. <br /><br />
+                        <span
+                            class="text-xl md:text-2xl text-gray-500 font-mono block mt-4"
+                            >// A LIFETIME LEARNER DEDICATED TO THE CRAFT.</span
+                        >
+                    </p>
+                </div>
+            </section>
+
+            <!-- WORK (STACKING CARDS) -->
+            <section id="work" class="work-container bg-void relative z-10">
+                <div
+                    class="absolute top-12 left-6 md:left-12 z-20 pointer-events-none"
+                >
+                    <span class="font-mono text-xs text-neon"
+                        >(03) PROJECT_INDEX</span
+                    >
+                </div>
+
+                <!-- CARD 01 -->
+                <div class="card-wrapper sticky top-0">
+                    <a
+                        href="https://github.com/yourusername/project1"
+                        target="_blank"
+                        class="project-card bg-card group"
+                    >
+                        <div
+                            class="w-full md:w-1/3 p-8 md:p-12 flex flex-col justify-between border-b md:border-b-0 md:border-r border-[#1f1f1f]"
+                        >
+                            <div>
+                                <div class="font-mono text-xs text-neon mb-4">
+                                    01 // MOBILE
+                                </div>
+                                <h3
+                                    class="text-4xl md:text-5xl font-bold mb-6 group-hover:text-white transition-colors"
+                                >
+                                    Flutter FinTech
+                                </h3>
+                                <p
+                                    class="text-gray-400 text-sm leading-relaxed"
+                                >
+                                    A high-performance cross-platform mobile
+                                    wallet handling real-time transactions with
+                                    strict security protocols.
+                                </p>
+                            </div>
+                            <div
+                                class="mt-8 font-mono text-xs flex flex-wrap gap-2 text-gray-500"
+                            >
+                                <span
+                                    class="px-2 py-1 border border-gray-800 rounded"
+                                    >FLUTTER</span
+                                >
+                                <span
+                                    class="px-2 py-1 border border-gray-800 rounded"
+                                    >DART</span
+                                >
+                                <span
+                                    class="px-2 py-1 border border-gray-800 rounded"
+                                    >FIREBASE</span
+                                >
+                            </div>
+                        </div>
+                        <div
+                            class="w-full md:w-2/3 h-full relative overflow-hidden bg-gray-900"
+                        >
+                            <img
+                                src="https://images.unsplash.com/photo-1556742049-0cfed4f7a07d?q=80&w=2070&auto=format&fit=crop"
+                                class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500 group-hover:scale-105 transition-transform duration-700"
+                                alt="Mobile App"
+                            />
+                            <div
+                                class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/20 backdrop-blur-[2px]"
+                            >
+                                <span
+                                    class="font-mono text-sm bg-black text-white px-4 py-2 border border-white/20"
+                                    >VIEW_CODE</span
+                                >
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- CARD 02 -->
+                <div class="card-wrapper sticky top-0">
+                    <a
+                        href="https://github.com/yourusername/project2"
+                        target="_blank"
+                        class="project-card bg-card group"
+                    >
+                        <div
+                            class="w-full md:w-1/3 p-8 md:p-12 flex flex-col justify-between border-b md:border-b-0 md:border-r border-[#1f1f1f]"
+                        >
+                            <div>
+                                <div class="font-mono text-xs text-neon mb-4">
+                                    02 // BACKEND
+                                </div>
+                                <h3
+                                    class="text-4xl md:text-5xl font-bold mb-6 group-hover:text-white transition-colors"
+                                >
+                                    Go Microservices
+                                </h3>
+                                <p
+                                    class="text-gray-400 text-sm leading-relaxed"
+                                >
+                                    Scalable microservice architecture for
+                                    e-commerce, capable of handling 10k+
+                                    concurrent requests.
+                                </p>
+                            </div>
+                            <div
+                                class="mt-8 font-mono text-xs flex flex-wrap gap-2 text-gray-500"
+                            >
+                                <span
+                                    class="px-2 py-1 border border-gray-800 rounded"
+                                    >GOLANG</span
+                                >
+                                <span
+                                    class="px-2 py-1 border border-gray-800 rounded"
+                                    >DOCKER</span
+                                >
+                                <span
+                                    class="px-2 py-1 border border-gray-800 rounded"
+                                    >GRPC</span
+                                >
+                            </div>
+                        </div>
+                        <div
+                            class="w-full md:w-2/3 h-full relative overflow-hidden bg-gray-900"
+                        >
+                            <img
+                                src="https://images.unsplash.com/photo-1558494949-ef526b01201b?q=80&w=2600&auto=format&fit=crop"
+                                class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500 group-hover:scale-105 transition-transform duration-700"
+                                alt="Server"
+                            />
+                            <div
+                                class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/20 backdrop-blur-[2px]"
+                            >
+                                <span
+                                    class="font-mono text-sm bg-black text-white px-4 py-2 border border-white/20"
+                                    >VIEW_CODE</span
+                                >
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- CARD 03 -->
+                <div class="card-wrapper sticky top-0">
+                    <a
+                        href="https://github.com/yourusername/project3"
+                        target="_blank"
+                        class="project-card bg-card group"
+                    >
+                        <div
+                            class="w-full md:w-1/3 p-8 md:p-12 flex flex-col justify-between border-b md:border-b-0 md:border-r border-[#1f1f1f]"
+                        >
+                            <div>
+                                <div class="font-mono text-xs text-neon mb-4">
+                                    03 // FULL STACK
+                                </div>
+                                <h3
+                                    class="text-4xl md:text-5xl font-bold mb-6 group-hover:text-white transition-colors"
+                                >
+                                    SaaS Analytics
+                                </h3>
+                                <p
+                                    class="text-gray-400 text-sm leading-relaxed"
+                                >
+                                    A comprehensive dashboard for monitoring IoT
+                                    devices with real-time data streaming and
+                                    alerts.
+                                </p>
+                            </div>
+                            <div
+                                class="mt-8 font-mono text-xs flex flex-wrap gap-2 text-gray-500"
+                            >
+                                <span
+                                    class="px-2 py-1 border border-gray-800 rounded"
+                                    >REACT</span
+                                >
+                                <span
+                                    class="px-2 py-1 border border-gray-800 rounded"
+                                    >NODE</span
+                                >
+                                <span
+                                    class="px-2 py-1 border border-gray-800 rounded"
+                                    >POSTGRES</span
+                                >
+                            </div>
+                        </div>
+                        <div
+                            class="w-full md:w-2/3 h-full relative overflow-hidden bg-gray-900"
+                        >
+                            <img
+                                src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2600&auto=format&fit=crop"
+                                class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500 group-hover:scale-105 transition-transform duration-700"
+                                alt="Analytics"
+                            />
+                            <div
+                                class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/20 backdrop-blur-[2px]"
+                            >
+                                <span
+                                    class="font-mono text-sm bg-black text-white px-4 py-2 border border-white/20"
+                                    >VIEW_CODE</span
+                                >
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="h-[10vh]"></div>
+            </section>
+
+            <!-- STACK -->
+            <section
+                class="py-24 px-6 md:px-12 bg-[#080808] relative z-20 border-t border-white/5"
+            >
+                <div
+                    class="font-mono text-xs text-gray-500 mb-8 uppercase tracking-widest"
+                >
+                    Tech Stack
+                </div>
+                <div
+                    class="grid grid-cols-2 md:grid-cols-4 gap-[1px] bg-gray-900 border border-gray-900"
+                >
+                    <div
+                        class="bg-void p-8 hover:bg-white/5 transition-colors duration-300 flex flex-col gap-4 group"
+                    >
+                        <div
+                            class="font-mono text-xs text-gray-600 group-hover:text-neon"
+                        >
+                            MOBILE
+                        </div>
+                        <div class="text-xl font-bold">Flutter / Expo</div>
+                    </div>
+                    <div
+                        class="bg-void p-8 hover:bg-white/5 transition-colors duration-300 flex flex-col gap-4 group"
+                    >
+                        <div
+                            class="font-mono text-xs text-gray-600 group-hover:text-neon"
+                        >
+                            WEB
+                        </div>
+                        <div class="text-xl font-bold">Laravel</div>
+                    </div>
+                    <div
+                        class="bg-void p-8 hover:bg-white/5 transition-colors duration-300 flex flex-col gap-4 group"
+                    >
+                        <div
+                            class="font-mono text-xs text-gray-600 group-hover:text-neon"
+                        >
+                            BACKEND
+                        </div>
+                        <div class="text-xl font-bold">Express.js</div>
+                    </div>
+                    <div
+                        class="bg-void p-8 hover:bg-white/5 transition-colors duration-300 flex flex-col gap-4 group"
+                    >
+                        <div
+                            class="font-mono text-xs text-gray-600 group-hover:text-neon"
+                        >
+                            BAAS
+                        </div>
+                        <div class="text-xl font-bold">Firebase / Supabase</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FOOTER (Centered Button) -->
+            <section
+                id="contact"
+                class="h-[80vh] flex flex-col justify-center items-center relative overflow-hidden z-20 bg-void border-t border-white/5"
+            >
+                <div
+                    class="absolute inset-0 opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"
+                ></div>
+
+                <p class="font-mono text-xs text-neon mb-8">
+                    AVAILABLE FOR CONTRACT
+                </p>
+
+                <div class="magnetic-wrap relative z-30">
+                    <a
+                        href="mailto:hire@naufal.work"
+                        class="block text-[6vw] md:text-[8vw] font-black leading-none tracking-tighter text-white hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-neon hover:to-white transition-all duration-500 hover:scale-105 active:scale-95"
+                    >
+                        HIRE@NAUFAL.WORK
+                    </a>
+                </div>
+            </section>
+
+            <!-- MARQUEE (New Section Below Footer) -->
+            <section class="marquee-wrapper relative z-20">
+                <div class="marquee-content font-mono text-xs text-gray-500">
+                    <span class="mx-8">// MOBILE DEVELOPER</span>
+                    <span class="mx-8">// OPEN TO WORK</span>
+                    <span class="mx-8">// BACKEND DEVELOPER</span>
+                    <span class="mx-8">// OPEN TO WORK</span>
+                    <span class="mx-8">// MOBILE DEVELOPER</span>
+                    <span class="mx-8">// OPEN TO WORK</span>
+                    <span class="mx-8">// BACKEND DEVELOPER</span>
+                    <span class="mx-8">// OPEN TO WORK</span>
+                    <span class="mx-8">// MOBILE DEVELOPER</span>
+                    <span class="mx-8">// OPEN TO WORK</span>
+                    <span class="mx-8">// BACKEND DEVELOPER</span>
+                    <span class="mx-8">// OPEN TO WORK</span>
+                    <span class="mx-8">// MOBILE DEVELOPER</span>
+                    <span class="mx-8">// OPEN TO WORK</span>
+                    <span class="mx-8">// BACKEND DEVELOPER</span>
+                    <span class="mx-8">// OPEN TO WORK</span>
+                    <span class="mx-8">// MOBILE DEVELOPER</span>
+                    <span class="mx-8">// OPEN TO WORK</span>
+                    <span class="mx-8">// BACKEND DEVELOPER</span>
+                    <span class="mx-8">// OPEN TO WORK</span>
+                </div>
+            </section>
+        </main>
+
+        <script>
+            // --- 1. INITIALIZATION & SMOOTH SCROLL ---
+            const lenis = new Lenis({
+                duration: 1.2,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                direction: "vertical",
+                smooth: true,
+            });
+
+            function raf(time) {
+                lenis.raf(time);
+                requestAnimationFrame(raf);
+            }
+            requestAnimationFrame(raf);
+
+            // Custom Nav Scroll
+            document.querySelectorAll(".nav-link").forEach((anchor) => {
+                anchor.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute("href");
+                    lenis.scrollTo(targetId);
+                });
+            });
+
+            // Sync GSAP
+            gsap.registerPlugin(ScrollTrigger);
+
+            // --- 2. SPOTLIGHT MOUSE TRACKING ---
+            const spotlight = document.getElementById("spotlight");
+            if (spotlight) {
+                window.addEventListener("mousemove", (e) => {
+                    spotlight.style.opacity = 1;
+                    const x = e.clientX;
+                    const y = e.clientY;
+                    spotlight.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
+                });
+            }
+
+            // --- 3. ANIMATIONS ---
+
+            // Manifesto Reveal
+            gsap.from(".manifesto-text", {
+                scrollTrigger: {
+                    trigger: "#about",
+                    start: "top 75%",
+                    end: "bottom 75%",
+                    scrub: 1,
+                },
+                opacity: 0.2,
+                y: 50,
+                duration: 1,
+            });
+
+            // Card Stacking
+            const cards = gsap.utils.toArray(".project-card");
+            cards.forEach((card, i) => {
+                gsap.to(card, {
+                    scale: 0.95,
+                    opacity: 0.5,
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top top",
+                        end: "bottom top",
+                        scrub: true,
+                    },
+                });
+            });
+
+            // Magnetic Button
+            const magnetics = document.querySelectorAll(".magnetic-wrap");
+            magnetics.forEach((magnetic) => {
+                magnetic.addEventListener("mousemove", (e) => {
+                    const position = magnetic.getBoundingClientRect();
+                    const x = e.clientX - position.left - position.width / 2;
+                    const y = e.clientY - position.top - position.height / 2;
+                    gsap.to(magnetic.children[0], {
+                        x: x * 0.3,
+                        y: y * 0.3,
+                        duration: 1,
+                        ease: "power2.out",
+                    });
+                });
+                magnetic.addEventListener("mouseleave", (e) => {
+                    gsap.to(magnetic.children[0], {
+                        x: 0,
+                        y: 0,
+                        duration: 1,
+                        ease: "elastic.out(1, 0.3)",
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>
